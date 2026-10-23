@@ -4,7 +4,6 @@ export class HeaderComponent {
     private readonly page: Page;
     private readonly searchInput: Locator
     private readonly searchButton: Locator
-    private readonly cartButton: Locator
     private readonly accountDropdownButton: Locator
     private readonly loginLink: Locator
 
@@ -12,14 +11,17 @@ export class HeaderComponent {
         this.page = page;
 
         this.searchInput = this.page.getByRole('textbox', { name: '/Search For Products/i'});
-        this.searchButton = this.page.getByRole('button', { button, '/search/i' });
+        this.searchButton = this.page.getByRole('button', { name: '/search/i' }).first();
         this.accountDropdownButton = this.page.getByRole('button', { name: '/My Account/i' });
         this.loginLink = this.page.getByRole('link', { name: '/Login/i' });
     }
 
     async searchForProduct(productName: string): Promise<void> {
-        await this.searchInput.fill(productName);
-        await this.searchButton.click();
+        const searchInput = this.page.getByPlaceholder('Search For Products').first();
+        const searchButton = this.page.getByRole('button', { name: /^Search$/i }).first();
+
+        await searchInput.fill(productName);
+        await searchButton.click();
     }
 
     async openLoginMenu(): Promise<void> {

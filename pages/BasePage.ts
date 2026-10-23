@@ -7,9 +7,9 @@ export abstract class BasePage {
         this.page = page;
     }
 
-    async navigateTo(path : string): Promise<void> {
+    async navigateTo(path : string = ''): Promise<void> {
         console.log(`[Navigation] Navigating to ${path}`);
-        await this.page.goto(path);
+        await this.page.goto(path, { waitUntil: 'domcontentloaded' });
     }
 
     async clickElement(locator: Locator, elementName: string): Promise<void> {
@@ -23,5 +23,6 @@ export abstract class BasePage {
         await locator.waitFor({ state: 'visible' });
         await localStorage.waitFor({ state: 'visible' });
         await locator.fill(text); 
+        return text;
     }
 }
