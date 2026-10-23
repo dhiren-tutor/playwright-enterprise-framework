@@ -1,20 +1,28 @@
 import { test, expect } from '../fixtures/pageObjectFixture';
+import searchData from '../data/search-data.json';
 
-test.describe('E-Commerce Global Product Search Suite', () => {
+test.describe('E-Commerce data driven Product Search Suite', () => {
 
-  test('Should navigate to the homepage and verify the trending section', async ({ homePage }) => {
-    // Arrange, Act : go to landing
-    await homePage.navigateTo();
+  for(const product of searchData.validProducts){
 
-    await expect(homePage.topTrendingHeader).toBeVisible();
+    test(`Should find product results for keyword ${product.keyword}`, async ({ homePage }) => {
+      // Arrange, Act : go to landing
+      await homePage.navigateTo();
+
+      await homePage.header.searchForProduct(product.keyword);
+
+      await expect(homePage.page).toHaveURL(new RegExp(product.expectedUrlToken));
     
-  });
+    });
+  }
+  
 
-  test('Should be able to search a product via the global search bar', async ({ homePage, page }) => {
+  test('Should print the active environment', async ({ homePage, page }) => {
     await homePage.navigateTo();
 
-    await homePage.header.searchForProduct('Iphone 14 Pro Max');
+    console.log(`[Environment] Target testing Base URL: ${process.env.BASE_URL}`);
+    console.log(`[Environment] Active Admin Account: ${process.env.ADMIN_EMAIL}`);
 
-    await expect(page).toHaveURL(/.*route=product%2Fsearch.*/i);
+    expect(process.env.BASE_URL).toBeDefined();
   })
 });

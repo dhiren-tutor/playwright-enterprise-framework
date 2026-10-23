@@ -1,0 +1,9 @@
+{
+  "validProducts": [
+    { "keyword": "iPhone", "expectedUrlToken": "route=product/search" },
+    { "keyword": "iMac", "expectedUrlToken": "route=product/search" }
+  ],
+  "invalidProducts": [
+    { "keyword": "NonExistentItemXYZ" }
+  ]
+}
