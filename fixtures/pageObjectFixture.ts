@@ -1,18 +1,21 @@
 import {test as baseTest} from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
+import { SearchResultsPage } from '@pages/SearchResultsPage';
 
 type MyPageObjects = {
     homePage: HomePage;
+    searchResultsPage: SearchResultsPage;
 }
 
 export const test = baseTest.extend<MyPageObjects>({
 
     homePage: async ({ page }, use) => {
-        const homePage = new HomePage(page);
 
-        await use(homePage);
+        await use(new HomePage(page));
+    },
 
-        console.log('[Fixtures] Test execution completed. Performing cleanup if necessary.');
+    searchResultsPage: async ({page}, use) => {
+        await use(new SearchResultsPage(page))
     }
 });
 

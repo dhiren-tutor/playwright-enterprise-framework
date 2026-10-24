@@ -18,11 +18,14 @@ export abstract class BasePage {
         await locator.click();
     }
 
-    async fillField(locator: Locator, text: string, fieldName: string): Promise<string> {
+    async fillField(locator: Locator, text: string, fieldName: string): Promise<void> {
         console.log(`[UI Action] Entering charaters into filed: ${fieldName}`);
         await locator.waitFor({ state: 'visible' });
         await localStorage.waitFor({ state: 'visible' });
         await locator.fill(text); 
-        return text;
+    }
+
+    protected getElementFromListByText(listLocator: Locator, textMatch: string | RegExp): Locator {
+        return listLocator.filter({ hasText: textMatch });
     }
 }
