@@ -1,28 +1,24 @@
 import { test, expect } from '../fixtures/pageObjectFixture';
 import searchData from '../data/search-data.json';
 
-test.describe('E-Commerce data driven Product Search Suite', () => {
+test.describe('MediShop Platform Structural & Routing Verification Suite', () => {
 
-  for(const product of searchData.validProducts){
 
-    test(`Should find product results for keyword ${product.keyword}`, async ({ homePage }) => {
+    test('Should successfully load the MediShop home layout and verify main components', async ({ homePage }) => {
       // Arrange, Act : go to landing
-      await homePage.navigateTo();
+      await homePage.navigateToHome();
 
-      await homePage.header.searchForProduct(product.keyword);
-
-      await expect(homePage.page).toHaveURL(new RegExp(product.expectedUrlToken));
+      const isPlatformActive = await homePage.isPharmacyPlatformLoaded()
+      expect(isPlatformActive).toBe(true)
     
     });
-  }
+
   
 
-  test('Should print the active environment', async ({ homePage, page }) => {
-    await homePage.navigateTo();
+  test('Should navigate to the product catalog layout through the global header navigation link', async ({ homePage, page }) => {
+    await homePage.navigateToHome();
 
-    console.log(`[Environment] Target testing Base URL: ${process.env.BASE_URL}`);
-    console.log(`[Environment] Active Admin Account: ${process.env.ADMIN_EMAIL}`);
-
-    expect(process.env.BASE_URL).toBeDefined();
+    await homePage.header.openMedicinesCatalog()
+    await expect(homePage.page).toHaveURL(/.*medicines.*/)
   })
 });

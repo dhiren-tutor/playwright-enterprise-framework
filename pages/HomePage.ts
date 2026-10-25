@@ -1,4 +1,4 @@
-import {expect, Page, Locator} from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { HeaderComponent } from './components/HeaderComponent';
 
@@ -6,19 +6,23 @@ export class HomePage extends BasePage {
 
     public readonly header: HeaderComponent;
 
-    private readonly shopByCategoryBtn: Locator;
-    public readonly topTrendingHeader: Locator;
+    private readonly mainPharmacyHeading: Locator;
+    private readonly shopByCategoryHeading: Locator;
 
     constructor(page: Page) {
         super(page);
 
         this.header = new HeaderComponent(page);
         
-        this.shopByCategoryBtn = this.page.getByRole('region', { name: /Shop By Category/i });
-        this.topTrendingHeader = this.page.getByRole('heading', { name: /Top Trending Categories/i });
+        this.mainPharmacyHeading = this.page.getByRole('heading', { name: /Your practice pharmacy/i });
+        this.shopByCategoryHeading = this.page.getByRole('heading', { name: /Shop by category/i });
     }
 
-    async expandCategories(): Promise<void> {
-        await this.clickElement(this.shopByCategoryBtn, 'Shop By Category button');
+    async navigateToHome(): Promise<void> {
+        await this.navigateTo('/home.html');
+  }
+
+    async isPharmacyPlatformLoaded(): Promise<boolean> {
+        return await this.mainPharmacyHeading.isVisible();
     }
 }
