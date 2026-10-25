@@ -24,7 +24,7 @@ export default defineConfig({
   ],
   use: {
     
-    baseURL: process.env.BASE_URL || 'https://ecommerce-playground.lambdatest.io/',
+    baseURL: process.env.BASE_URL || 'https://www.way2automation.com/MediShopWebApp',
       trace: 'on-first-retry',
       screenshot: 'only-on-failure',
       video: 'retain-on-failure',
@@ -51,4 +51,3 @@ export default defineConfig({
 
   outputDir: 'test-results/',
 });
-

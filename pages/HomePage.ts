@@ -19,7 +19,7 @@ export class HomePage extends BasePage {
     }
 
     async navigateToHome(): Promise<void> {
-        await this.navigateTo('/home.html');
+        await this.navigateTo('/MediShopWebApp/home.html');
   }
 
     async isPharmacyPlatformLoaded(): Promise<boolean> {
